@@ -4,10 +4,10 @@ const { Pool } = require('pg');
 //Define and export DB Connection parameters 
 module.exports = {
 	pool: new Pool ({
-	  user: 'python',
+	  user: 'postgres',
 	  host: 'localhost',
-	  database: 'python',
-	  password:  'python',
+	  password: 'password',
+	  database: 'countability',
 	  port: 5432,
 		}),
 }
