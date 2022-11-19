@@ -6,10 +6,10 @@ INSERT INTO behaviors (title, comment) VALUES ('drinking','amount of time');
 INSERT INTO behaviors (title, comment) VALUES ('eating','# of glasses');
 INSERT INTO behaviors (title, comment) VALUES ('eating','amount of time');
 
-INSERT INTO templates (title, comment) VALUES ('classroom','normal behaviors');
-INSERT INTO templates (title, comment) VALUES ('workplace','normal behaviors');
-INSERT INTO templates (title, comment) VALUES ('classroom','bad behaviors');
-INSERT INTO templates (title, comment) VALUES ('social experiment','nervous reactions');
+INSERT INTO templates (title, duration) VALUES ('classroom', 3600);
+INSERT INTO templates (title, duration) VALUES ('workplace', 3600);
+INSERT INTO templates (title, duration) VALUES ('classroom',3600);
+INSERT INTO templates (title, duration) VALUES ('social experiment',3600);
 
 INSERT INTO subjects (first_name, last_name, comment) VALUES ('John','Doe','Kindergarden');
 INSERT INTO subjects (first_name, last_name, comment) VALUES ('Sarah','May','Kindergarden');

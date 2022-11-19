@@ -7,22 +7,9 @@ const { Pool } = require('pg')
 const { pool } = require('../database');
 
 //table of contents
-/*
-Routes: Input is in JSON format using variables listed
-endpoint, method, input, description
-/templates - GET - (NO INPUT) - return list of existing templates
-/template/:template_id - GET - (template_id) - return list of behaviors associated with a template
-/behaviors - GET - (NO INPUT) - returns list of all existing behaviors (located in behaviors.js)
-
-/t_add_behavior - POST - (template_id, behavior_class_id) - adds a behavior to a template
-/t_remove_behavior/:bridge_template_id - DELETE - (bridge_template_id [in endpoint])
-
-/template -	POST - (title, comment) - insert new template
-/template -	PUT -  - (template_id,title, comment) - modifies title and comment of template
-/template/id - DELETE - (template_id [in endpoint]) - deletes template from existing list
 
 
-*/
+
 
 //return list of existing templates
 app.get('/templates', (req, res) => {
@@ -30,7 +17,7 @@ app.get('/templates', (req, res) => {
 		.connect()
 		.then(client => {
  			return client
-				.query(`select id, title, comment from templates`)
+				.query(`select * from templates`)
 				.then(data => {
 			        client.release()
 			        res.send(data.rows)
@@ -41,6 +28,64 @@ app.get('/templates', (req, res) => {
 			})
   	})
 });
+
+//Create a new template and insert associated behaviors into bridge_templates_behaviors_classes
+app.post('/new_template', (req, res) => {
+	//unpack behaviors object
+	var object = req.body.behaviors_object
+	var list  = []
+	object.forEach(e => list.push(e.behavior_class_id));
+	pool
+		.connect()
+		.then(client => {
+ 			return client
+				.query(`
+with sample as (insert into templates (title, duration) values (\'${req.body.title}\',${req.body.duration}) returning id)
+insert into bridge_templates_behaviors_classes
+	(template_id, behavior_class_id) 
+select sample.id, unnest(array[${list}])
+from sample
+`)
+				.then(data => {
+			        client.release()
+			        res.send(data.rows)
+			})
+		.catch(err => {
+		        client.release()
+		        console.log(err.stack)
+			})
+  	})
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 //return list of behaviors associated with a template - can use for edit button and create
 app.get('/templates/:template_id', (req, res) => {

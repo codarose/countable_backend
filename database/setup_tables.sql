@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS behaviors (
 CREATE TABLE IF NOT EXISTS templates (
     id serial PRIMARY KEY,
     title VARCHAR ( 100 ) NOT NULL,
-    comment VARCHAR ( 255 ),
+    duration int,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
